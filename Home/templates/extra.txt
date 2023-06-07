@@ -1,0 +1,43 @@
+{% block javascript %}
+<script>
+        function updateData() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '/instructor-list/');
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    var data = JSON.parse(xhr.responseText);
+                    var list = document.getElementById('instructor-list');
+                    list.innerHTML = '';
+                    data.forEach(function(item) {
+                        var li = document.createElement('li');
+                        li.textContent = item.name + ' - ' + item.email + ' - ' + item.message;
+                        list.appendChild(li);
+                    });
+                }
+            };
+            xhr.send();
+        }
+        setInterval(updateData, 5000); // Update every 5 seconds
+        document.getElementById('my-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/instructor-list/');
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onload = function() {
+                if (xhr.status === 200 && JSON.parse(xhr.responseText).success) {
+                    document.getElementById('form').reset();
+                    updateData();
+                }
+            };
+            xhr.send(new FormData(event.target));
+        });
+</script>
+{% endblock %}
+
+<ul id="instructor-list">
+    {% for item in my_data %}
+        <li>{{ item.Inst_ID }} - {{ item.Instructor_Name }}</li>
+    {% endfor %}
+    </ul>
+
+    

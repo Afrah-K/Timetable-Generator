@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %} Programmes {% endblock title %}
+
+{% block body %} 
+
+<br>
+<form method ="POST" id="form" action ="/programmes" >
+    {% csrf_token %}
+    {{form}}
+    <input type="submit" name = "create-programmes">
+</form>
+<br>
+
+<table class ="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">School</th>
+            <th scope="col">Programme ID</th>
+            <th scope="col">Programme Name</th>
+            <th scope="col">Programme Year/Semester</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in programmes_list %}
+            <tr>
+                <th scope = "row"> {{forloop.counter}}</th> 
+                <td>{{item.School}}</td>           
+                <td>{{item.Programme_ID}}</td>
+                <td>{{item.Programme_Name}}</td>
+                <td>{{item.Programme_YearandSemester}}</td>
+                <td><a href ={% url 'delprogrammes' item.id %}><button type="button" class="btn btn-danger btn-sm" name = "delprogrammes">Delete</button></td> 
+            </tr>
+        {% endfor %}
+    </tbody>  
+</table>
+
+{% endblock body %}

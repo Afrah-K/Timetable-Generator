@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %} Rooms {% endblock title %}
+
+{% block body %} 
+
+<br>
+<form method ="POST" id="form" action ="/rooms" >
+    {% csrf_token %}
+    {{form}}
+    <input type="submit" name = "create-room">
+</form>
+<br>
+
+<table class ="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Room ID</th>
+            <th scope="col">Room Capacity</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in rooms_list %}
+            <tr>
+                <th scope = "row"> {{forloop.counter}}</th> 
+                <td>{{item.Room_ID}}</td>
+                <td>{{item.Room_Capacity}}</td>
+                <td><a href ={% url 'delrooms' item.id %}><button type="button" class="btn btn-danger btn-sm" name = "delrooms">Delete</button></td> 
+            </tr>
+        {% endfor %}
+    </tbody>  
+</table>
+
+{% endblock body %}

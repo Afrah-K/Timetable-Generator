@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %} Instructors {% endblock title %}
+
+{% block body %} 
+
+<br>
+<form method ="POST" id="form" action ="/instructors" >
+    {% csrf_token %}
+    {{form}}
+    <input type="submit" name = "create-inst">
+</form>
+<br>
+
+<table class ="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Instructor ID</th>
+            <th scope="col">Instructor Name</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in instructors_list %}
+            <tr>
+                <th scope = "row"> {{forloop.counter}}</th> 
+                <td>{{item.Inst_ID}}</td>
+                <td>{{item.Instructor_Name}}</td>
+                <td><a href ={% url 'delInstructors' item.id %}><button type="button" class="btn btn-danger btn-sm" name = "delInstructors">Delete</button></td> 
+            </tr>
+        {% endfor %}
+    </tbody>  
+</table>
+
+{% endblock body %}
+

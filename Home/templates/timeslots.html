@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %} Timeslots {% endblock title %}
+
+{% block body %} 
+
+<br>
+<form method ="POST" id="form" action ="/timeslots" >
+    {% csrf_token %}
+    {{form}}
+    <input type="submit" name = "create-timeslots">
+</form>
+<br>
+
+<table class ="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Meet ID</th>
+            <th scope="col">Days</th>
+            <th scope="col">Slots</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in times_list %}
+            <tr>
+                <th scope = "row"> {{forloop.counter}}</th> 
+                <td>{{item.Meet_ID}}</td>
+                <td>{{item.Days}}</td>
+                <td>{{item.Slots}}</td>
+                <td><a href ={% url 'deltimeslots' item.id %}><button type="button" class="btn btn-danger btn-sm" name = "deltimeslots">Delete</button></td> 
+            </tr>
+        {% endfor %}
+    </tbody>  
+</table>
+
+{% endblock body %}
